@@ -2,29 +2,35 @@ const express = require('express');
 
 const app = express();
 
-app.get('/user', (req, res) => {
-    res.send([{ firstName: 'Tanya', lastName: 'Dutt' }, { firstName: 'Anushka', lastName: 'Mishra' }])
-});
+// app.get('/ab?c', (req, res) => {
+//     res.send({ firstName: "Zoe", lastName: 'Thomas'});
+// });
 
-app.post('/user', (req, res) => {
-    res.send('Data Saved Successfully');
-});
+// app.get('/ab+c', (req, res) => {
+//     res.send({ name: 'Siddhant', lastName: "Singh" });
+// });
 
-app.put('/user', (req, res) => {
-    res.send('Data Updated Successfully via put');
-});
+// app.get('/ab*cd', (req, res) => {
+//     res.send({ name: 'Siddhant', lastName: "Singh" });
+// });
 
-app.patch('/user', (req, res) => {
-    res.send('Data Updated Successfully via patch');
-});
+// app.get(/a/, (req, res) => {
+//     res.send('Hello Regex');
+// })
 
-app.delete('/user', (req, res) => {
-    res.send('Data Deleted Successfully');
-});
+// app.get(/.*fly$/, (req, res) => {
+//     res.send('fly regex');
+// })
 
-app.use('/test/123', (req, res) => {
-    res.send('test 123');
-});
+// app.get('/user', (req, res) => {
+//     console.log(req.query);
+//     res.send('Hello User query');
+// })
+
+app.get('/user/:userId/:name/:password', (req, res) => {
+    console.log(req.params);
+    res.send('Hello user params')
+})
 
 app.listen(8080, () => {
     console.log('Server is running successfully at port 8080....');

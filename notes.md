@@ -16,5 +16,11 @@ create a remote repo on github
 push all code to remote origin
 Play with routes and routes extension /test, /test/hello, /hello, /
 Order of routes matters a lot
-Install postan and make a workspace/collection/test api
+Install postman and make a workspace/collection/test api
+write logic to handle get, put, post, patch, delete api call and test them in postman
+Explore routing and advance routing using ?, +, * in the routes
+Explore regex in route /a/, /.*fly$/
+Go through with express documentation to learn more about route
+Reading the query params in routes
+Reading the dynamic routes
 
