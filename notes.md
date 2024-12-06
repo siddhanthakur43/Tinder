@@ -33,3 +33,4 @@ how express handle rquest behind the scenes
 diff bw app.use & app.all
 write a dummy auth middle ware for admin routes.
 write a dummy auth midddle ware for all user routes. except /user/login
+Error handling using app.use('/', (err, req, res, next) => {}) use always at the end
