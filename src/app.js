@@ -2,35 +2,20 @@ const express = require('express');
 
 const app = express();
 
-// app.get('/ab?c', (req, res) => {
-//     res.send({ firstName: "Zoe", lastName: 'Thomas'});
-// });
-
-// app.get('/ab+c', (req, res) => {
-//     res.send({ name: 'Siddhant', lastName: "Singh" });
-// });
-
-// app.get('/ab*cd', (req, res) => {
-//     res.send({ name: 'Siddhant', lastName: "Singh" });
-// });
-
-// app.get(/a/, (req, res) => {
-//     res.send('Hello Regex');
-// })
-
-// app.get(/.*fly$/, (req, res) => {
-//     res.send('fly regex');
-// })
-
-// app.get('/user', (req, res) => {
-//     console.log(req.query);
-//     res.send('Hello User query');
-// })
-
-app.get('/user/:userId/:name/:password', (req, res) => {
-    console.log(req.params);
-    res.send('Hello user params')
-})
+app.use('/user', [(req, res, next) => {
+    console.log("Response 1")
+    next();
+},
+    (req,res, next) => {
+        res.send('2nd Response');
+        console.log('2nd Response');
+        next();
+    }],
+    (res, req, next) => {
+        res.send('Response 3');
+        console.log('3rd Response');
+    }
+)
 
 app.listen(8080, () => {
     console.log('Server is running successfully at port 8080....');
