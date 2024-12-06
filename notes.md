@@ -24,3 +24,12 @@ Go through with express documentation to learn more about route
 Reading the query params in routes
 Reading the dynamic routes
 
+Multiple Route handler
+next()
+next function and error along with res.send()
+app.use('/route', [r1, r2, r3, r4])
+what is middleware? why do we need it
+how express handle rquest behind the scenes
+diff bw app.use & app.all
+write a dummy auth middle ware for admin routes.
+write a dummy auth midddle ware for all user routes. except /user/login
