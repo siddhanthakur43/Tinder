@@ -34,3 +34,13 @@ diff bw app.use & app.all
 write a dummy auth middle ware for admin routes.
 write a dummy auth midddle ware for all user routes. except /user/login
 Error handling using app.use('/', (err, req, res, next) => {}) use always at the end
+
+create a free clusted on mongodb official website(monodb atlas)
+install mongoose
+connect application to the database <connectionURl>/tinder
+call connectDb function and connect to db before starting the application on 8080
+
+create userSchema & user Model
+create post /signup api to add data to database
+push some documents using api calls from postman
+error handling using try catch
