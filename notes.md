@@ -48,3 +48,12 @@ error handling using try catch
 diff bw json and java object
 add the express.json() middleware to app
 make signup api dynamic to receive the data from postman(end User)
+Use user.findone() with if we have duplicate emailId 
+API- get user by email
+API- get all user from DB
+API- to delete the User
+diff bw patch and put
+API:- create update user api using id
+explore mongoose document specially models
+what are options in Model.findOneAndUpdate method and explore it
+API:- to update user with emailId
