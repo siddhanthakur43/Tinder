@@ -64,3 +64,5 @@ Improve db schema ,pull all appropriate validation in all fields
 Add timestamps to user schema
 Add api level validation on patch request and signup post api
 Data sanitization: add api validation for each field
+install validator
+user validator and explore validator library function and user isEmail, isURL, isStrongPassword
