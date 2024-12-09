@@ -14,7 +14,7 @@ app.post('/signup', async (req, res) => {
     await user.save();
     res.send('User Added Successfully');
     } catch (e) {
-        res.status(400).send('Something went wrong');
+        res.status(400).send('Something went wrong' + e);
     }
     
 });
@@ -30,7 +30,7 @@ app.get('/user', async (req, res) => {
             res.send(userData);
         }
     } catch (e) {
-        res.status(400).send('Something went wrong');
+        res.status(400).send('Something went wrong'+ e);
     }
 })
 
@@ -45,7 +45,7 @@ app.get('/userOne', async (req, res) => {
             res.send(userData);
         }
     } catch (e) {
-        res.status(400).send('Something went wrong');
+        res.status(400).send('Something went wrong'+ e);
     }
 })
 
@@ -55,7 +55,7 @@ app.get('/feed', async (req, res) => {
         const usersData = await User.find({});
         res.send(usersData);
     } catch (e) {
-        res.status(400).send('Something went wrong');
+        res.status(400).send('Something went wrong'+ e);
     }
 })
 
@@ -66,35 +66,37 @@ app.delete('/user', async (req, res) => {
         const id = await User.findByIdAndDelete(userId);
         res.send('User Deleted Successfully');
     } catch (error) {
-        res.status(400).send('Something went wrong');
+        res.status(400).send('Something went wrong'+ e);
     }
 })
 
-//api to update the user using id
-// app.patch('/user', async (req, res) => {
-//     const userId = req.body.userId;
-//     const data = req.body;
-//     try {
-//         const updatedData = await User.findByIdAndUpdate(userId, data);
-//         res.send('User data updated successfully')
-//     } catch (error) {
-//         res.status(400).send('Something went wrong');
-//     }
-// })
+// api to update the user using id
+app.patch('/user', async (req, res) => {
+    const userId = req.body.userId;
+    const data = req.body;
+    try {
+        const updatedData = await User.findByIdAndUpdate(userId, data, {
+            runValidators: true,
+        });
+        res.send('User data updated successfully')
+    } catch (error) {
+        res.status(400).send('Something went wrong'+ error);
+    }
+})
 
 //api to update the user using email id
-app.patch('/user', async (req, res) => {
-    const emailId = req.body.emailId;
-    console.log(emailId);
-    const data = req.body;
-    console.log(data);
-    try {
-        const userData = await User.findOneAndUpdate({emailId: emailId}, data);
-        res.send('User updated successfully using emailId');
-    } catch (error) {
-        res.status(400).send('Something went wrong');
-    }
-})
+// app.patch('/user', async (req, res) => {
+//     const emailId = req.body.emailId;
+//     console.log(emailId);
+//     const data = req.body;
+//     console.log(data);
+//     try {
+//         const userData = await User.findOneAndUpdate({emailId: emailId}, data);
+//         res.send('User updated successfully using emailId');
+//     } catch (error) {
+//         res.status(400).send('Something went wrong'+ e);
+//     }
+// })
 
 
 connectDB()

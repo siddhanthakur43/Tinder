@@ -57,3 +57,8 @@ API:- create update user api using id
 explore mongoose document specially models
 what are options in Model.findOneAndUpdate method and explore it
 API:- to update user with emailId
+
+//Explore schema options from documentation
+Add required, unique, min, trim, default, minLenght, custom validation function for gender
+Improve db schema ,pull all appropriate validation in all fields
+Add timestamps to user schema
