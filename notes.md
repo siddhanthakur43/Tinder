@@ -66,3 +66,11 @@ Add api level validation on patch request and signup post api
 Data sanitization: add api validation for each field
 install validator
 user validator and explore validator library function and user isEmail, isURL, isStrongPassword
+Never trust req.body
+
+validate data in signup API: create helper function
+install bcrypt package
+create password hash using bcrypt
+save user using encrypted password
+create login api
+compare password throw error if passowor or email is invalid

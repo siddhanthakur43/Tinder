@@ -1,6 +1,8 @@
 const express = require('express');
 const { connectDB } = require('./config/database')
 const User = require('./models/user');
+const { validateSignUpData } = require('./utils/validation')
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -8,16 +10,43 @@ app.use(express.json());
 
 //SignUp Api to add user to DB
 app.post('/signup', async (req, res) => {
-    //creating a instance of the user model
-    const user = new User(req.body);
     try {
-    await user.save();
+        //validating a signup data
+        validateSignUpData(req)
+        const { firstName, lastName, emailId, password } = req.body;
+        // encrypting the password
+        const hashPassword = await bcrypt.hash(password, 10);
+        console.log(hashPassword);
+        //creating a instance of the user model
+        const user = new User({ firstName, lastName, emailId, password: hashPassword});
+        await user.save();
     res.send('User Added Successfully');
     } catch (e) {
-        res.status(400).send('Something went wrong' + e);
+        res.status(400).send('ERROR :' + e.message);
     }
-    
 });
+
+app.post('/login', async (req, res) => {
+    try {
+        const { emailId, password } = req.body;
+        console.log(emailId, password);
+        const user = await User.findOne({ emailId: emailId })
+        console.log(user);
+        if (!user) {
+            throw new Error('Invalid Credentials');
+        } 
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (isPasswordValid) {
+            res.send('User Logged in successfully');
+        } else {
+            throw new Error('Invalid Credentials');
+        }
+
+    } catch (error) {
+        res.status(400).send('ERROR :' + error.message);
+    }
+})
 
 //user api to get the data of user by email id
 app.get('/user', async (req, res) => {
@@ -30,7 +59,7 @@ app.get('/user', async (req, res) => {
             res.send(userData);
         }
     } catch (e) {
-        res.status(400).send('Something went wrong'+ e);
+        res.status(400).send('Something went wrong'+ e.message);
     }
 })
 
