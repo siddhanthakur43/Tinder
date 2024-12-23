@@ -74,3 +74,15 @@ create password hash using bcrypt
 save user using encrypted password
 create login api
 compare password throw error if passowor or email is invalid
+
+install cookie-parser
+send dummy cookie to user
+create GET/profile api and check if you get the cookie back res.cookie('token', token);
+read cookie
+install jsonwebtoken
+in login api after email and password validation create jwt token and send it to user inside cookie
+read cookie inside profile api and find logged in user
+
+userAuth middleware
+add the userAuth middleware in profile api and send connection req
+set the expiry of jwt and cookie to 8days

@@ -3,10 +3,14 @@ const { connectDB } = require('./config/database')
 const User = require('./models/user');
 const { validateSignUpData } = require('./utils/validation')
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser')
+const jwt = require('jsonwebtoken');
+const { userAuth } = require('./middlewares/userAuth')
 
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 //SignUp Api to add user to DB
 app.post('/signup', async (req, res) => {
@@ -16,7 +20,6 @@ app.post('/signup', async (req, res) => {
         const { firstName, lastName, emailId, password } = req.body;
         // encrypting the password
         const hashPassword = await bcrypt.hash(password, 10);
-        console.log(hashPassword);
         //creating a instance of the user model
         const user = new User({ firstName, lastName, emailId, password: hashPassword});
         await user.save();
@@ -29,15 +32,19 @@ app.post('/signup', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { emailId, password } = req.body;
-        console.log(emailId, password);
         const user = await User.findOne({ emailId: emailId })
-        console.log(user);
         if (!user) {
             throw new Error('Invalid Credentials');
-        } 
+        }
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (isPasswordValid) {
+            //create jwt
+            //you can expire jwt
+            const token = await jwt.sign({ _id: user._id }, 'Sid@12345', { expiresIn: '1d'});
+            //add token to cookie and send the response back to user
+            //you can expire cookie as well
+            res.cookie('token', token);
             res.send('User Logged in successfully');
         } else {
             throw new Error('Invalid Credentials');
@@ -46,6 +53,15 @@ app.post('/login', async (req, res) => {
     } catch (error) {
         res.status(400).send('ERROR :' + error.message);
     }
+});
+
+app.get('/profile', userAuth, async (req, res) => {
+    const user = req.user;
+    res.send(user);
+});
+
+app.post('/send', userAuth, (req, res) => {
+    res.send('User request send by' + req.user.firstName);
 })
 
 //user api to get the data of user by email id
@@ -116,7 +132,6 @@ app.patch('/user/:userId', async (req, res) => {
         const updatedData = await User.findByIdAndUpdate(userId, data, {
             runValidators: true,
         });
-        console.log(updatedData)
         res.send('User data updated successfully')
     } catch (error) {
         res.status(400).send('Something went wrong'+ error);
@@ -126,9 +141,7 @@ app.patch('/user/:userId', async (req, res) => {
 //api to update the user using email id
 // app.patch('/user', async (req, res) => {
 //     const emailId = req.body.emailId;
-//     console.log(emailId);
 //     const data = req.body;
-//     console.log(data);
 //     try {
 //         const userData = await User.findOneAndUpdate({emailId: emailId}, data);
 //         res.send('User updated successfully using emailId');
