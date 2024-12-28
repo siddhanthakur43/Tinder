@@ -86,3 +86,5 @@ read cookie inside profile api and find logged in user
 userAuth middleware
 add the userAuth middleware in profile api and send connection req
 set the expiry of jwt and cookie to 8days
+
+write user schema methods
