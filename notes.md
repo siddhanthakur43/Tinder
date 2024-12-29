@@ -88,3 +88,13 @@ add the userAuth middleware in profile api and send connection req
 set the expiry of jwt and cookie to 8days
 
 write user schema methods
+
+Express router:- express documentation
+explore tinder api's
+create list of all the api's that you need
+group multiple routes under respective router
+
+explore read documentation of express.router
+create route folder for managing auth, profile and request routers
+create authRouter, profileRouter, requestRouter
+import those routers in app.js
