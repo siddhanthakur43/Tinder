@@ -98,3 +98,8 @@ explore read documentation of express.router
 create route folder for managing auth, profile and request routers
 create authRouter, profileRouter, requestRouter
 import those routers in app.js
+
+create post/logout api
+patch patch/profile/edit api
+test all api 
+create patch/profile/passowrd forgot password api
